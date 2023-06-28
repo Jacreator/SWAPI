@@ -42,7 +42,6 @@ class CharactersService extends BaseService
 
     public function sendOutData($payload)
     {
-
         $gender = $payload->get('gender');
         $sortDirection = $payload->get('sort_direction');
         $sort = $payload->get('sort');
@@ -55,11 +54,10 @@ class CharactersService extends BaseService
 
         // sort directions
         $preparedData = collect($preparedData)
-            ->sortBy($sort, SORT_NATURAL, $sortDirection)
+            ->sortBy($sort, SORT_NATURAL, $sortDirection === 'desc')
             ->values();
 
         // metadata area
-        // Calculate metadata (total characters and total height)
         $totalCharacters = count($preparedData);
         $totalHeightCm = array_sum(array_column($preparedData->toArray(), 'height'));
         $totalHeightInches = $totalHeightCm * 0.3937;
