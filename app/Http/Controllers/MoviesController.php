@@ -31,7 +31,9 @@ class MoviesController extends Controller
             
             // Update the comment count for each movie
             $movies = $movies->map(function ($movie) {
-                $movie['comment_count'] = $this->_movieService->fetchCommentCount($movie['title']);
+                $comments = $this->_movieService->fetchCommentCount($movie['title']);
+                $movie['comment_count'] = $comments->count();
+                $movie['comments'] = $comments;
                 return $movie;
             });
 

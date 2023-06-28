@@ -60,7 +60,9 @@ class MoviesService extends BaseService
 
         // Iterate over movies and fetch comment count
         foreach ($movies as &$movie) {
-            $movie['comment_count'] = $this->fetchCommentCount($movie['title']);
+            $comments = $this->fetchCommentCount($movie['title']);
+            $movie['comment_count'] = $comments->count();
+            $movie['comments'] = $comments;
         }
 
         return $movies;
@@ -80,9 +82,8 @@ class MoviesService extends BaseService
             // Format UTC date & time
             $comment->created_at = Carbon::parse($comment->created_at)->utc()->format('Y-m-d H:i:s');
 
-
             return $comment;
         });
-        return $comments->count();
+        return $comments;
     }
 }
