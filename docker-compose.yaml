@@ -1,0 +1,49 @@
+version: "3.8"
+
+services: 
+
+    nginx:
+      container_name: nginx
+      image: nginx:alpine
+      ports:
+        - "8080:80"
+      depends_on:
+        - app
+        - db
+      volumes:
+        - ./src:/var/www
+        - ./nginx/conf.d/:/etc/nginx/conf.d
+
+    db:
+        image: postgres
+        container_name: postgres
+        volumes: 
+            - ./postgresql/data:/var/lib/postgresql/data
+        ports:
+          - "5431:5432"
+        environment:
+            - POSTGRES_DB=laravel-swapi
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=password
+
+    pgadmin:
+      image: dpage/pgadmin4:latest
+      container_name: pgadmin
+      ports:
+        - "5050:80"
+      depends_on:
+        - db
+      environment:
+        PGADMIN_DEFAULT_EMAIL: jambone.james82@gmail.com
+        PGADMIN_DEFAULT_PASSWORD: password
+
+    app:
+      container_name: SWAPI
+      build:
+        context: ./php
+        dockerfile: Dockerfile
+      volumes:
+        - ./src:/var/www
+      ports:
+        - "9001:9000"
+      working_dir: /var/www

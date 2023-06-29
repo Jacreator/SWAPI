@@ -1,0 +1,9 @@
+{
+    "[php]": {
+        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+    },
+    "cSpell.words": [
+        "Responsable",
+        "SWAPI"
+    ]
+}
