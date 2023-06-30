@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get install -y libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql
 
-COPY ./src /var/www/
+COPY ./src /var/www
 
 COPY ./docker /var/www/docker
 
@@ -31,3 +31,7 @@ RUN chmod -R ugo+rw /var/www/storage
 RUN chmod -R 755 /var/www/bootstrap/
 RUN chmod -R 777 /var/www/storage/
 RUN chmod -R 777 /var/www/public/
+
+# WORKDIR '/var/www/'
+
+# CMD ["php" ,"artisan", "serve"]

@@ -39,9 +39,7 @@ services:
 
     app:
       container_name: SWAPI
-      build:
-        context: ./
-        dockerfile: Dockerfile
+      image: jacreator/swapi-app
       ports:
         - "9001:9000"
       working_dir: /var/www
