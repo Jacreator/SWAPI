@@ -12,13 +12,13 @@ services:
         - db
       volumes:
         - ./src:/var/www
-        - ./nginx/conf.d/:/etc/nginx/conf.d
+        - ./docker/nginx/conf.d/:/etc/nginx/conf.d
 
     db:
         image: postgres
         container_name: postgres
         volumes: 
-            - ./postgresql/data:/var/lib/postgresql/data
+            - ./docker/postgresql/data:/var/lib/postgresql/data
         ports:
           - "5431:5432"
         environment:
@@ -40,10 +40,8 @@ services:
     app:
       container_name: SWAPI
       build:
-        context: ./php
+        context: ./
         dockerfile: Dockerfile
-      volumes:
-        - ./src:/var/www
       ports:
         - "9001:9000"
       working_dir: /var/www
